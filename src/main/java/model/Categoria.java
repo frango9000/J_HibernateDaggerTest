@@ -1,28 +1,47 @@
 package model;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Categoria {
+@Entity
+public class Categoria implements Serializable {
 
+    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
+    @Column(length = 20, unique = true, nullable = false)
     private String nombre;
+
+    @OneToMany(mappedBy = "categoria")
+    List<Producto> productos = Lists.newArrayList();
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Categoria setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(@NonNull String nombre) {
+    public Categoria setNombre(@NonNull String nombre) {
         this.nombre = nombre;
+        return this;
     }
 
     @Override

@@ -1,13 +1,31 @@
 package model;
 
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Vendido {
+@Entity
+@IdClass(VendidoId.class)
+public class Vendido implements Serializable {
 
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "idVenta")
     private Venta venta;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "idProducto")
     private Producto producto;
+
+    @Column(nullable = false)
     private float precio;
 
     public Venta getVenta() {

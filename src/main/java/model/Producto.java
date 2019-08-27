@@ -1,15 +1,38 @@
 package model;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Producto {
+@Entity
+public class Producto implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
+    @Column(length = 20, unique = true, nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private float precio;
+    @ManyToOne
+    @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
+
+
+    @OneToMany(mappedBy = "producto")
+    List<Vendido> ventas = Lists.newArrayList();
 
     public int getId() {
         return id;

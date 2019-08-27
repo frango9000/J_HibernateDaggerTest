@@ -3,27 +3,49 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>bartest</artifactId>
-
+  <groupId>com.kurama</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <version>1.0-SNAPSHOT</version>
+  <name>J_HibernateDaggerTest</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <java.version>11.0.4</java.version>
+    <hibernate.version>5.3.11.Final</hibernate.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <release>11.0.4</release>
-          <source>11.0.4</source>
-          <target>11.0.4</target>
-        </configuration>
         <groupId>org.apache.maven.plugins</groupId>
         <version>3.8.1</version>
+        <configuration>
+          <release>${java.version}</release>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>javafx-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>tiendaclub.MainFX</mainClass>
-        </configuration>
         <groupId>org.openjfx</groupId>
         <version>0.0.1</version>
+        <configuration>
+          <mainClass>J_HibernateDaggerTest.Main</mainClass>
+        </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>bartest.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
   <dependencies>
@@ -93,20 +115,32 @@
       <version>1.0</version>
     </dependency>
 
-
     <dependency>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <groupId>org.hibernate</groupId>
-      <version>4.3.8.Final</version>
+      <version>${hibernate.version}</version>
     </dependency>
     <dependency>
-      <artifactId>hibernate-entitymanager</artifactId>
       <groupId>org.hibernate</groupId>
-      <version>4.3.8.Final</version>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate.version}</version>
     </dependency>
-  </dependencies>
-  <groupId>com.kurama</groupId>
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <version>1.0.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.2</version>
+    </dependency>
 
-  <modelVersion>4.0.0</modelVersion>
-  <version>1.0-SNAPSHOT</version>
+
+  </dependencies>
 </project>
