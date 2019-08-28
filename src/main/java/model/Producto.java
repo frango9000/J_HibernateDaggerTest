@@ -1,15 +1,13 @@
 package model;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Entity
@@ -22,12 +20,12 @@ public class Producto extends Identifiable implements Serializable {
     @Column(nullable = false)
     private float precio;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
-    @OneToMany(mappedBy = "producto")
-    List<Vendido> ventas = Lists.newArrayList();
+//    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
+//    List<Vendido> ventas = Lists.newArrayList();
 
     public String getNombre() {
         return nombre;

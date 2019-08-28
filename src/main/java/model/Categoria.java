@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -24,7 +25,7 @@ public class Categoria extends Identifiable implements Serializable {
         this.nombre = nombre;
     }
 
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     List<Producto> productos = Lists.newArrayList();
 
     public String getNombre() {
@@ -34,6 +35,10 @@ public class Categoria extends Identifiable implements Serializable {
     public Categoria setNombre(@NonNull String nombre) {
         this.nombre = nombre;
         return this;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
     }
 
     @Override

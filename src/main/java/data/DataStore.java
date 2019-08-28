@@ -31,4 +31,11 @@ public class DataStore {
     public static IdentifiableDao<Venta> getVentas() {
         return ventas;
     }
+
+    public static void initialQuery() {
+        categorias.findAll();
+        productos.findAll();
+        ventas.findAll();
+
+    }
 }

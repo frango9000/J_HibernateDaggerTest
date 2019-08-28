@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -18,7 +19,7 @@ public class Venta extends Identifiable implements Serializable {
     @Column
     private LocalDateTime fecha_hora;
 
-    @OneToMany(mappedBy = "venta")
+    @OneToMany(mappedBy = "venta", fetch = FetchType.EAGER)
     List<Vendido> productos = Lists.newArrayList();
 
     public LocalDateTime getFecha_hora() {
@@ -27,6 +28,10 @@ public class Venta extends Identifiable implements Serializable {
 
     public void setFecha_hora(@NonNull LocalDateTime fecha_hora) {
         this.fecha_hora = fecha_hora;
+    }
+
+    public List<Vendido> getProductos() {
+        return productos;
     }
 
     @Override

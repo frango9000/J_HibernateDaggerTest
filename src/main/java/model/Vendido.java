@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -15,12 +16,12 @@ public class Vendido implements IEntity<VendidoId> {
     @EmbeddedId
     private VendidoId id;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id", updatable = true, nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(insertable = false, updatable = true, nullable = false)
     private Venta venta;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id", updatable = true, nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(insertable = false, updatable = true, nullable = false)
     private Producto producto;
 
     @Column(nullable = false)
@@ -42,6 +43,22 @@ public class Vendido implements IEntity<VendidoId> {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     @Override
