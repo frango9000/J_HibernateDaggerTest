@@ -7,40 +7,27 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Entity
-public class Producto implements Serializable {
+//@SequenceGenerator(name="default_generator", sequenceName = "producto_seq", allocationSize=50)
+public class Producto extends Identifiable implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private int id;
     @Column(length = 20, unique = true, nullable = false)
     private String nombre;
+
     @Column(nullable = false)
     private float precio;
+
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
-
     @OneToMany(mappedBy = "producto")
     List<Vendido> ventas = Lists.newArrayList();
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -81,7 +68,7 @@ public class Producto implements Serializable {
 
     @Override
     public int hashCode() {
-        return getId();
+        return Objects.hashCode(getId());
     }
 
     @Override

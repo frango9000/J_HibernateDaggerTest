@@ -1,29 +1,40 @@
 package model;
 
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class VendidoId implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    private int venta;
-    private int producto;
+    private int idVenta;
+    private int idProducto;
 
-    public int getVenta() {
-        return venta;
+    public VendidoId() {
     }
 
-    public void setVenta(int venta) {
-        this.venta = venta;
+    public VendidoId(int idVenta, int idProducto) {
+        this.idVenta    = idVenta;
+        this.idProducto = idProducto;
     }
 
-    public int getProducto() {
-        return producto;
+    public int getIdVenta() {
+        return idVenta;
     }
 
-    public void setProducto(int producto) {
-        this.producto = producto;
+    public void setIdVenta(int venta) {
+        this.idVenta = venta;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int producto) {
+        this.idProducto = producto;
     }
 
     @Override
@@ -33,12 +44,20 @@ public class VendidoId implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         VendidoId vendidoId = (VendidoId) o;
-        return getVenta() == vendidoId.getVenta() &&
-               getProducto() == vendidoId.getProducto();
+        return getIdVenta() == vendidoId.getIdVenta() &&
+               getIdProducto() == vendidoId.getIdProducto();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getVenta(), getProducto());
+        return Objects.hash(getIdVenta(), getIdProducto());
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                          .add("venta", idVenta)
+                          .add("producto", idProducto)
+                          .toString();
     }
 }

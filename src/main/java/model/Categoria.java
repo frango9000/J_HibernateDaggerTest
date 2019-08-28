@@ -11,21 +11,21 @@ import javax.persistence.OneToMany;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Entity
+//@SequenceGenerator(name="default_generator", sequenceName = "categoria_seq", allocationSize=50)
 public class Categoria extends Identifiable implements Serializable {
 
     @Column(length = 20, unique = true, nullable = false)
     private String nombre;
 
+    public Categoria() {
+    }
+
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+    }
+
     @OneToMany(mappedBy = "categoria")
     List<Producto> productos = Lists.newArrayList();
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -49,8 +49,9 @@ public class Categoria extends Identifiable implements Serializable {
 
     @Override
     public int hashCode() {
-        return getId();
+        return Objects.hashCode(getId());
     }
+
 
     @Override
     public String toString() {

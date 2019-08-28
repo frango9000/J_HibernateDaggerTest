@@ -9,7 +9,7 @@ public interface Globals {
     boolean SQL_CONN = false;
     boolean VERBOSE_FACTORY = false;
 
-    Level LOG_LEVEL = Level.ALL;
+    Level LOG_LEVEL = Level.WARNING;
 
     String DB_PREFIX = "tdc_";
 

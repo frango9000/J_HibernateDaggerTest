@@ -18,4 +18,8 @@ public abstract class ConnectionFactory {
         }
         return entityManagerFactory.createEntityManager();
     }
+
+    public static void close() {
+        entityManagerFactory.close();
+    }
 }
