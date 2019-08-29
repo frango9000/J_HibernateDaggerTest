@@ -9,16 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.MenuButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class EditorControl<T extends Identifiable> extends BorderPane {
 
     @FXML
     public BorderPane fxGenericEditorBorderPane;
-    @FXML
-    public MenuButton fxButtonMenu;
     protected T editee;
     protected boolean creating = true;
     protected GridControl<T> gridControl;
@@ -26,7 +23,7 @@ public class EditorControl<T extends Identifiable> extends BorderPane {
 
     {
         try {
-            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/editor/GenericEditorPane.fxml"));
+            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GenericEditorPane.fxml"));
             fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             fxmlLoader.load();
@@ -35,8 +32,10 @@ public class EditorControl<T extends Identifiable> extends BorderPane {
         }
     }
 
-    public EditorControl(T editeeIdentifiableDao, IdentifiableDao<T> dataOrigin) {
-        this.dataOrigin = dataOrigin;
+    public EditorControl(T editee, IdentifiableDao<T> dataOrigin, GridControl<T> gridControl, Pane gridpane) {
+        this.dataOrigin  = dataOrigin;
+        this.gridControl = gridControl;
+        setCenter(gridpane);
         if (editee != null) {
             creating    = false;
             this.editee = editee;
@@ -44,14 +43,6 @@ public class EditorControl<T extends Identifiable> extends BorderPane {
         }
     }
 
-    public void setGridControl(GridControl<T> gridControl) {
-        this.gridControl = gridControl;
-        gridControl.setFxButtonMenu(fxButtonMenu);
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        setCenter(gridPane);
-    }
 
     @FXML
     protected void fxBtnDiscardAction(ActionEvent actionEvent) {

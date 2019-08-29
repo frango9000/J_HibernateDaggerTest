@@ -9,9 +9,10 @@ module bartest {
     requires net.bytebuddy;
     requires java.sql;
     requires java.xml.bind;
+    requires java.persistence;
 
     opens app.control to javafx.fxml;
-    opens app.model to org.hibernate.orm.core;
+    opens app.model to javafx.base, org.hibernate.orm.core;
 
     opens app;
 

@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 
-public class CategoriaEditorControl extends GridControl<Categoria> {
+public class CategoriaGridControl extends GridControl<Categoria> {
 
     @FXML
     private TextField fxId;
@@ -30,7 +30,7 @@ public class CategoriaEditorControl extends GridControl<Categoria> {
 
     @Override
     public void setFields(Categoria editee) {
-        if (editee.getId() > 0)
+        if (editee.getId() != null)
             fxId.setText((Integer.toString(editee.getId())));
         fxNombre.setText(Strings.nullToEmpty(editee.getNombre()));
     }

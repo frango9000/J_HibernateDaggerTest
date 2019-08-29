@@ -12,11 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 public abstract class TableControl<T extends Identifiable> extends BorderPane {
 
@@ -25,19 +25,13 @@ public abstract class TableControl<T extends Identifiable> extends BorderPane {
     @FXML
     protected TableView<T> fxTable;
     @FXML
-    protected TableColumn<T, Boolean> fxColumnIsActive;
-    @FXML
     protected TableColumn<T, Integer> fxColumnId;
-    @FXML
-    protected Button fxBtnDisable;
-    @FXML
-    protected Button fxBtnShowHide;
 
     protected String editorFxml;
 
     public TableControl() {
         try {
-            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tables/GenericActivableTablePane.fxml"));
+            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GenericActivableTablePane.fxml"));
             fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             fxmlLoader.load();
@@ -48,9 +42,6 @@ public abstract class TableControl<T extends Identifiable> extends BorderPane {
 
     @FXML
     void initialize() {
-        fxTable.getColumns().remove(fxColumnIsActive);
-        fxBtnDisable.setVisible(false);
-        fxBtnShowHide.setVisible(false);
 
         fxColumnId.setCellValueFactory(new PropertyValueFactory<T, Integer>("id"));
     }
@@ -125,7 +116,11 @@ public abstract class TableControl<T extends Identifiable> extends BorderPane {
         if (clean) {
             listedObjects.clear();
         }
-        listedObjects.retainAll(getDataOrigin().findAll());
+        getDataOrigin().findAll().forEach(t -> {
+            if (!listedObjects.contains(t)) {
+                listedObjects.add(t);
+            }
+        });
     }
 
     protected void addContent() {
@@ -133,15 +128,17 @@ public abstract class TableControl<T extends Identifiable> extends BorderPane {
     }
 
     public <T extends Identifiable> EditorControl<T> getEditorControl(String fxml, T editee, IdentifiableDao<T> dataOrigin) {
-        EditorControl<T> control = new EditorControl<>(editee, dataOrigin);
         FXMLLoader loader = new FXMLLoader(TableControl.class.getResource(fxml));
+        Pane pane = null;
+        GridControl<T> control = null;
         try {
-            control.setGridPane(loader.load());
-            control.setGridControl(loader.getController());
+            pane    = loader.load();
+            control = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return control;
+        return new EditorControl<>(editee, dataOrigin, control, pane);
+
     }
 
     protected abstract IdentifiableDao<T> getDataOrigin();

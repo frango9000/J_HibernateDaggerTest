@@ -1,6 +1,7 @@
 package app;
 
 import app.control.MainControl;
+import app.data.DataStore;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -41,6 +42,12 @@ public class MainFX extends Application {
 
         mainPane = (BorderPane) MainControl.loadFXML();
         primaryStage.setScene(new Scene(mainPane));
+
+        DataStore.getCategorias().findAll();
+
+
+
+
         primaryStage.show();
     }
 

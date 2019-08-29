@@ -32,6 +32,8 @@ public class MainControl extends BorderPane {
     }
 
     public void fxProductosAction(ActionEvent actionEvent) {
+        ProductoTableControl u = new ProductoTableControl();
+        fxMainPane.setCenter(u);
     }
 
     public void fxVentasAction(ActionEvent actionEvent) {

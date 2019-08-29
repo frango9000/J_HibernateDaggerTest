@@ -20,7 +20,7 @@ public class Producto extends Identifiable implements Serializable {
     private String nombre;
 
     @Column(nullable = false)
-    private float precio;
+    private int precio;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idCategoria", nullable = false)
@@ -37,11 +37,11 @@ public class Producto extends Identifiable implements Serializable {
         this.nombre = nombre;
     }
 
-    public float getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 
