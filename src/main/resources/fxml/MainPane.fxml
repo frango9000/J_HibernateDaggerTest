@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.MainPane">
+<BorderPane fx:id="fxMainPane" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.control.MainControl">
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
@@ -17,7 +16,10 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem mnemonicParsing="false" text="Delete"/>
+            <MenuItem fx:id="fxCategorias" mnemonicParsing="false" onAction="#fxCategoriasAction" text="Categorias"/>
+            <MenuItem fx:id="fxProductos" mnemonicParsing="false" onAction="#fxProductosAction" text="Productos"/>
+            <MenuItem fx:id="fxVentas" mnemonicParsing="false" onAction="#fxVentasAction" text="Ventas"/>
+            <MenuItem fx:id="fxVendidos" mnemonicParsing="false" onAction="#fxVendidosAction" text="Vendidos"/>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
