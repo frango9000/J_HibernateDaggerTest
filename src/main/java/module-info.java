@@ -10,6 +10,7 @@ module bartest {
     requires java.sql;
     requires java.xml.bind;
     requires java.persistence;
+    requires jfxtras.controls;
 
     opens app.control to javafx.fxml;
     opens app.model to javafx.base, org.hibernate.orm.core;

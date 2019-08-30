@@ -1,10 +1,10 @@
 package app.model;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +25,7 @@ public class Categoria extends Identifiable implements Serializable {
     }
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
-    private List<Producto> productos = Lists.newArrayList();
+    private Set<Producto> productos = Sets.newHashSet();
 
     public String getNombre() {
         return nombre;
@@ -36,12 +36,16 @@ public class Categoria extends Identifiable implements Serializable {
         return this;
     }
 
-    public List<Producto> getProductos() {
+    public Set<Producto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(Set<Producto> productos) {
         this.productos = productos;
+    }
+
+    public void addProductos(Producto producto) {
+        productos.add(producto);
     }
 
 

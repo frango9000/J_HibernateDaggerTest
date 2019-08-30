@@ -1,11 +1,11 @@
 package app.model;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +19,7 @@ public class Venta extends Identifiable implements Serializable {
     private LocalDateTime fecha_hora;
 
     @OneToMany(mappedBy = "venta", fetch = FetchType.EAGER)
-    private List<Vendido> productos = Lists.newArrayList();
+    private Set<Vendido> vendidos = Sets.newHashSet();
 
     private LocalDateTime getFecha_hora() {
         return fecha_hora;
@@ -29,12 +29,16 @@ public class Venta extends Identifiable implements Serializable {
         this.fecha_hora = fecha_hora;
     }
 
-    public List<Vendido> getProductos() {
-        return productos;
+    public Set<Vendido> getVendidos() {
+        return vendidos;
     }
 
-    public void setProductos(List<Vendido> productos) {
-        this.productos = productos;
+    public void setVendidos(Set<Vendido> vendidos) {
+        this.vendidos = vendidos;
+    }
+
+    public void addVendidos(Vendido vendido) {
+        vendidos.add(vendido);
     }
 
     @Override

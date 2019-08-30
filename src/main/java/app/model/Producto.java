@@ -51,6 +51,7 @@ public class Producto extends Identifiable implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+        categoria.addProductos(this);
     }
 
     public Set<Vendido> getVentas() {

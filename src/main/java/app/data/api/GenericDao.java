@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public abstract class GenericDao<E extends IEntity<I>, I extends Serializable> implements Globals {
+public class GenericDao<E extends IEntity<I>, I extends Serializable> implements Globals {
 
     private EntityManager entityManager;
     protected Class<E> clazz; // E = Entity Class
@@ -100,13 +100,13 @@ public abstract class GenericDao<E extends IEntity<I>, I extends Serializable> i
         return Optional.empty();
     }
 
-    public final Set<E> save(final E... entities) {
+    public final Set<E> save(final Set<E> entities) {
         Set<E> returnSet = Sets.newHashSet();
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
             for (E entity : entities) {
                 try {
-                    entityManager.persist(entity);
+                    entityManager.merge(entity);
                 } catch (EntityExistsException e) {
                     returnSet.add(entity);
                     Flogger.atInfo().withCause(e).log();

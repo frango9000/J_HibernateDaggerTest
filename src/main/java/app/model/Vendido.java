@@ -1,27 +1,25 @@
 package app.model;
 
-import app.data.api.IEntity;
 import com.google.common.base.MoreObjects;
 import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class Vendido implements IEntity<VendidoId> {
-
-    @EmbeddedId
-    private VendidoId vendidoId;
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"idVenta", "idProducto"}))
+public class Vendido extends Identifiable {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "idVenta", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "idProducto", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
     @Column(nullable = false)
@@ -29,16 +27,6 @@ public class Vendido implements IEntity<VendidoId> {
 
     @Column(nullable = false)
     private float precioUnidad;
-
-    @Override
-    public VendidoId getId() {
-        return new VendidoId();
-    }
-
-    @Override
-    public void setId(VendidoId id) {
-
-    }
 
     public float getPrecioUnidad() {
         return precioUnidad;
@@ -54,6 +42,7 @@ public class Vendido implements IEntity<VendidoId> {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+        this.venta.addVendidos(this);
     }
 
     public Producto getProducto() {
@@ -79,7 +68,7 @@ public class Vendido implements IEntity<VendidoId> {
         if (o == null || getClass() != o.getClass())
             return false;
         Vendido vendido = (Vendido) o;
-        return cantidad == vendido.cantidad &&
+        return getCantidad() == vendido.getCantidad() &&
                Float.compare(vendido.getPrecioUnidad(), getPrecioUnidad()) == 0 &&
                Objects.equals(getVenta(), vendido.getVenta()) &&
                Objects.equals(getProducto(), vendido.getProducto());
@@ -87,7 +76,7 @@ public class Vendido implements IEntity<VendidoId> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getVenta(), getProducto());
+        return Objects.hash(getId());
     }
 
     @Override

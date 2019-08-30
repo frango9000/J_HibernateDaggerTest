@@ -41,8 +41,10 @@ public class MainFX extends Application {
         mainStage = primaryStage;
 
         mainPane = (BorderPane) MainControl.loadFXML();
-        primaryStage.setScene(new Scene(mainPane));
 
+        primaryStage.setScene(new Scene(mainPane));
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(800);
         DataStore.getCategorias().findAll();
 
 

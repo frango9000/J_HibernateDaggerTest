@@ -37,6 +37,8 @@ public class MainControl extends BorderPane {
     }
 
     public void fxVentasAction(ActionEvent actionEvent) {
+        VentaControl u = new VentaControl(null);
+        fxMainPane.setCenter(u);
     }
 
     public void fxVendidosAction(ActionEvent actionEvent) {
